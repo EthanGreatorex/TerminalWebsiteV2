@@ -69,20 +69,29 @@ inputElement.addEventListener("keydown", async function (event) {
 
 async function handleCommand(command) {
   let outputCommand = document.createElement("div");
+  let output = document.createElement("div");
   outputCommand.textContent = `--${command}`;
   outputContainer.appendChild(outputCommand);
 
-  // Split the help message into lines
-  const helpMessageLines = helpMessge.split("\n");
+  // Check if the command is "help"
+  if (command.toLowerCase() === "help") {
+    // Split the help message into lines
+    const helpMessageLines = helpMessge.split("\n");
 
-  // Iterate through each line and create a new div for each
-  for (const line of helpMessageLines) {
-    const lineDiv = document.createElement("div");
-    lineDiv.textContent = line;
-    outputContainer.appendChild(lineDiv);
-    await sleep(70); // Adjust the delay as needed
+    // Iterate through each line and create a new div for each
+    for (const line of helpMessageLines) {
+      const lineDiv = document.createElement("div");
+      lineDiv.textContent = line;
+      outputContainer.appendChild(lineDiv);
+      await sleep(70); // Adjust the delay as needed
+    }
+  } else {
+    // Process the command and display its output
+    output.textContent = `\n ${await processCommand(command)}`;
+    outputContainer.appendChild(output);
   }
 }
+
 
 
 async function processCommand(command) {
