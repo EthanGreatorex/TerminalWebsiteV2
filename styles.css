@@ -16,6 +16,7 @@ div{
 
 #output-container{
   color: rgb(201, 143, 34);
+  white-space: pre;
 }
 
 #input-container{

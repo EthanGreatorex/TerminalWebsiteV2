@@ -13,6 +13,19 @@ const banner = `----------------------------------------------------------------
 
 
 
+const helpMessge = ` projects                              links to other projects
+
+ themes                               view list of themes
+
+ theme set <theme>          set a theme
+
+ clear                                    clear the terminal
+
+ banner                                output the banner`
+
+
+
+
 function sleep(ms) {
   return new Promise((resolve) => setTimeout(resolve, ms));
 }
@@ -55,15 +68,27 @@ inputElement.addEventListener("keydown", async function (event) {
 });
 
 async function handleCommand(command) {
-  let output = document.createElement("div");
-  output.textContent = `\n ${await processCommand(command)}`;
-  outputContainer.appendChild(output);
+  let outputCommand = document.createElement("div");
+  outputCommand.textContent = `--${command}`;
+  outputContainer.appendChild(outputCommand);
+
+  // Split the help message into lines
+  const helpMessageLines = helpMessge.split("\n");
+
+  // Iterate through each line and create a new div for each
+  for (const line of helpMessageLines) {
+    const lineDiv = document.createElement("div");
+    lineDiv.textContent = line;
+    outputContainer.appendChild(lineDiv);
+    await sleep(70); // Adjust the delay as needed
+  }
 }
+
 
 async function processCommand(command) {
   switch (command.toLowerCase()) {
     case "help":
-      return `This is a help message.`;
+      return helpMessge;
     case "clear":
 
       for (let i = outputContainer.children.length - 1; i >= 0; i--) {
