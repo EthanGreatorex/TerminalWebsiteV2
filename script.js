@@ -19,8 +19,6 @@ const helpMessge = ` projects                              links to other projec
 
  theme set <theme>          set a theme
 
- mode dark|light                 set the background to light or dark mode
-
  clear                                    clear the terminal
 
  banner                                output the banner
@@ -34,6 +32,8 @@ const helpMessge = ` projects                              links to other projec
 
 const themesMessage = `
 
+      nature (default)
+
       midnight
 
       christmas
@@ -41,6 +41,10 @@ const themesMessage = `
       neon
 
       monochrome
+
+      aurora
+
+      firefly
       `;
 
 
@@ -116,6 +120,16 @@ async function handleCommand(command) {
   }
 }
 
+
+// Check for a stored theme on page load
+document.addEventListener("DOMContentLoaded", function () {
+  const storedTheme = localStorage.getItem("theme");
+  if (storedTheme) {
+    applyStoredTheme(storedTheme);
+  }
+});
+
+
 async function processCommand(command) {
   const bodyElement = document.body;
   switch (command.toLowerCase()) {
@@ -163,20 +177,38 @@ async function processCommand(command) {
       return "";
 
     case "theme set midnight":
-      applyThemeStyles("blue", "#1f3682");
+      applyThemeStyles("blue", "#1f3682", "#040621");
+      saveTheme("midnight");
       return "Theme set to midnight";
 
+    case "theme set nature":
+      applyThemeStyles("rgb(76, 121, 76)", "rgb(76, 121, 76)", "#1c2d27");
+      saveTheme("nature");
+      return "Theme set to nature";
+
     case "theme set christmas":
-      applyThemeStyles("red", "#23b10a");
+      applyThemeStyles("red", "#23b10a", "#6d231d");
+      saveTheme("christmas");
       return "Theme set to Christmas";
 
     case "theme set neon":
-      applyThemeStyles("cyan", "#8c00ff");
+      applyThemeStyles("cyan", "#8c00ff", "#4c00c0");
+      saveTheme("neon");
       return "Theme set to neon";
 
     case "theme set monochrome":
-      applyThemeStyles("white", "#000000");
+      applyThemeStyles("white", "#000000", "#191d1e");
+      saveTheme("monochrome");
       return "Theme set to monochrome";
+    
+    case "theme set aurora":
+      applyThemeStyles("#29ff9f", "#1c4853", "#01141e");
+      saveTheme("aurora");
+      return "Theme set to aurora";
+    
+    case "theme set firefly":
+      applyThemeStyles("#ffb354", "#ffa03b", "#011627");
+      saveTheme("firefly");
 
     default:
       return 'Command not found. Type "help" for assistance.';
@@ -191,7 +223,53 @@ async function processCommand(command) {
   }
 }
 
-function applyThemeStyles(textColor, shadowColor) {
+
+function saveTheme(theme) {
+  localStorage.setItem("theme", theme);
+}
+
+
+function applyStoredTheme(theme) {
+  const bodyElement = document.body;
+
+  switch (theme) {
+    case "midnight":
+      applyThemeStyles("blue", "#1f3682", "#040621");
+      break;
+
+    case "nature":
+      applyThemeStyles("rgb(76, 121, 76)", "rgb(76, 121, 76)", "#1c2d27");
+      break;
+
+    case "christmas":
+      applyThemeStyles("red", "#23b10a", "#6d231d");
+      break;
+
+    case "neon":
+      applyThemeStyles("cyan", "#8c00ff", "#4c00c0");
+      break;
+
+    case "monochrome":
+      applyThemeStyles("white", "#000000", "#191d1e");
+      break;
+
+    case "aurora":
+      applyThemeStyles("#29ff9f", "#1c4853", "#01141e");
+      break;
+
+    case "firefly":
+      applyThemeStyles("#ffb354", "#ffa03b", "#011627");
+      break;
+
+    default:
+      break;
+  }
+}
+
+
+
+
+function applyThemeStyles(textColor, shadowColor, bgColour) {
   // Add Neon theme styles
   bannerStyle = document.querySelector(".banner");
   bannerStyle.style.color = textColor;
@@ -200,6 +278,10 @@ function applyThemeStyles(textColor, shadowColor) {
   inputStyle.style.color = textColor;
   spanStyle = document.querySelector(".inputSpan");
   spanStyle.style.color = textColor;
+
+  const bodyElement = document.body;
+
+  bodyElement.style.backgroundColor = bgColour;
 
   glowElements = document.getElementsByClassName("glowText");
   for (var i = 0; i < glowElements.length; i++) {
