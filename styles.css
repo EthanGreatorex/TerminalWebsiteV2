@@ -1,15 +1,16 @@
 body{
   background-color: rgb(28, 28, 28);
+  
 }
 
 div{
   margin-bottom: 15px;
 }
 
-a{
+/* a.glowText{
   color: rgb(201, 143, 34);
   text-shadow: 0 0 10px #f0a754, 0 0 20px #f0a754, 0 0 30px #f0a754;
-}
+} */
 
 .banner{
   color: rgb(76, 121, 76);
@@ -26,8 +27,8 @@ a{
 
 #input-container{
   color: rgb(76, 121, 76);
-  margin-top: 10px;
 }
+
 
 
 #input-container input{
