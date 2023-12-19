@@ -22,6 +22,10 @@ const helpMessge = ` projects                              links to other projec
  clear                                    clear the terminal
 
  banner                                output the banner
+
+ music                                  listen to some nice music
+
+ search <query>                 search the web
  `;
 
  const linksMessage = `
@@ -131,9 +135,11 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
 async function processCommand(command) {
+  console.log("Processing command:", command);
   const bodyElement = document.body;
-  switch (command.toLowerCase()) {
-    case "clear":
+  switch (true) {
+    case command.toLowerCase() === "clear":
+      console.log("Clearing terminal...");
       for (let i = outputContainer.children.length - 1; i >= 0; i--) {
         const childElement = outputContainer.children[i];
         outputContainer.removeChild(childElement);
@@ -144,15 +150,15 @@ async function processCommand(command) {
       copyrightDiv.innerHTML = "";
       welcomeDiv.innerHTML = "";
       return "";
-    case "banner":
+    case command.toLowerCase() === "banner":
+      console.log("Displaying banner...");
       outputContainer.innerHTML = "";
       copyrightDiv.innerHTML = "";
       welcomeDiv.innerHTML = "";
       outputBanner();
       return "";
 
-    case "projects":
-
+    case command.toLowerCase() === "projects":
       const linksMessageLines = linksMessage.split("\n");
 
       for (const line of linksMessageLines) {
@@ -163,13 +169,22 @@ async function processCommand(command) {
       }
 
       return "";
-    
-    case "music":
-      window.open("https://www.youtube.com/watch?v=gFnunMAQ6NE","_blank");
-      return "Opening suggested music"
 
-    case "themes":
+    case command.toLowerCase() === "music":
+      window.open("https://www.youtube.com/watch?v=gFnunMAQ6NE", "_blank");
+      return "Opening suggested music";
 
+    case command.toLowerCase().startsWith("search "):
+      const query = command.slice("search ".length).trim();
+      console.log("Parsed query:", query);
+      if (query) {
+        openSearch(query);
+        return `Searching for ${query}...`;
+      } else {
+        return "Please provide a search query";
+      }
+
+    case command.toLowerCase() === "themes":
       themeMessageLines = themesMessage.split("\n");
       for (const line of themeMessageLines) {
         const themeMessageDiv = document.createElement("div");
@@ -180,37 +195,37 @@ async function processCommand(command) {
 
       return "";
 
-    case "theme set midnight":
+    case command.toLowerCase() === "theme set midnight":
       applyThemeStyles("blue", "#1f3682", "#040621");
       saveTheme("midnight");
       return "Theme set to midnight";
 
-    case "theme set nature":
+    case command.toLowerCase() === "theme set nature":
       applyThemeStyles("rgb(76, 121, 76)", "rgb(76, 121, 76)", "#1c2d27");
       saveTheme("nature");
       return "Theme set to nature";
 
-    case "theme set christmas":
+    case command.toLowerCase() === "theme set christmas":
       applyThemeStyles("red", "#23b10a", "#6d231d");
       saveTheme("christmas");
       return "Theme set to Christmas";
 
-    case "theme set neon":
+    case command.toLowerCase() === "theme set neon":
       applyThemeStyles("cyan", "#8c00ff", "#4c00c0");
       saveTheme("neon");
       return "Theme set to neon";
 
-    case "theme set monochrome":
+    case command.toLowerCase() === "theme set monochrome":
       applyThemeStyles("white", "#000000", "#191d1e");
       saveTheme("monochrome");
       return "Theme set to monochrome";
-    
-    case "theme set aurora":
+
+    case command.toLowerCase() === "theme set aurora":
       applyThemeStyles("#29ff9f", "#1c4853", "#01141e");
       saveTheme("aurora");
       return "Theme set to aurora";
-    
-    case "theme set firefly":
+
+    case command.toLowerCase() === "theme set firefly":
       applyThemeStyles("#ffb354", "#ffa03b", "#011627");
       saveTheme("firefly");
       return "Theme set to firefly";
@@ -218,13 +233,6 @@ async function processCommand(command) {
     default:
       return 'Command not found. Type "help" for assistance.';
 
-    case "mode light":
-      bodyElement.style.backgroundColor = "rgb(232, 232, 232)";
-      return "Light mode activated --> only strange people use light mode :>";
-
-    case "mode dark":
-      bodyElement.style.backgroundColor = "rgb(28, 28, 28)";
-      return "Dark mode activated";
   }
 }
 
@@ -295,4 +303,10 @@ function applyThemeStyles(textColor, shadowColor, bgColour) {
       i
     ].style.textShadow = `0 0 10px ${shadowColor}, 0 0 20px ${shadowColor}, 0 0 30px ${shadowColor}`;
   }
+}
+
+
+function openSearch(query){
+  const searchURL = `https://www.google.com/search?q=${encodeURIComponent(query)}`
+  window.open(searchURL, "_blank");
 }
