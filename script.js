@@ -163,6 +163,10 @@ async function processCommand(command) {
       }
 
       return "";
+    
+    case "music":
+      window.open("https://www.youtube.com/watch?v=gFnunMAQ6NE","_blank");
+      return "Opening suggested music"
 
     case "themes":
 
@@ -209,6 +213,7 @@ async function processCommand(command) {
     case "theme set firefly":
       applyThemeStyles("#ffb354", "#ffa03b", "#011627");
       saveTheme("firefly");
+      return "Theme set to firefly";
 
     default:
       return 'Command not found. Type "help" for assistance.';
