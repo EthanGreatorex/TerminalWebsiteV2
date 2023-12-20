@@ -13,30 +13,30 @@ const banner = `----------------------------------------------------------------
 --------------------------------------------------------------------------------------------------------------------
                                            `;
 
-const helpMessge = ` projects                              links to other projects
+const helpMessge = ` projects                                links to other projects
 
- themes                               view list of themes
+ themes                                  view list of themes
 
- theme set <theme>          set a theme
+ theme set <theme>                       set a theme
 
- clear                                    clear the terminal
+ clear                                   clear the terminal
 
- banner                                output the banner
+ banner                                  output the banner
 
- music                                  listen to some nice music
+ music                                   listen to some nice music
 
- search <query>                 search the web
+ search <query>                          search the web
  `;
 
  const linksMessage = `
       password lock                                        https://github.com/EggGreatorex/passwordLock
-      message encrypter                                https://github.com/EggGreatorex/MessageEncypter
-      notes  #work in progress                      https://github.com/EggGreatorex/Notes
+      message encrypter                                    https://github.com/EggGreatorex/MessageEncypter
+      notes  #work in progress                             https://github.com/EggGreatorex/Notes
       `;
 
 const themesMessage = `
 
-      nature (default)
+      nature
 
       midnight
 
@@ -48,7 +48,11 @@ const themesMessage = `
 
       aurora
 
-      firefly
+      firefly (default)
+
+      copper
+
+      dragon
       `;
 
 
@@ -230,6 +234,16 @@ async function processCommand(command) {
       saveTheme("firefly");
       return "Theme set to firefly";
 
+    case command.toLowerCase() === "theme set copper":
+      applyThemeStyles("#7db9b4", "#442f29", "#442f29");
+      saveTheme("copper");
+      return "Theme set to copper";
+
+    case command.toLowerCase() === "theme set dragon":
+      applyThemeStyles("#e2a528", "#c62d28", "#1a0b0c");
+      saveTheme("dragon");
+      return "Theme set to dragon";
+
     default:
       return 'Command not found. Type "help" for assistance.';
 
@@ -274,6 +288,14 @@ function applyStoredTheme(theme) {
       applyThemeStyles("#ffb354", "#ffa03b", "#011627");
       break;
 
+    case "copper":
+      applyThemeStyles("#7db9b4", "#442f29", "#442f29");
+      break;
+    
+    case "dragon":
+      applyThemeStyles("#e2a528", "#c62d28", "#1a0b0c");
+      break;
+
     default:
       break;
   }
@@ -286,6 +308,9 @@ function applyThemeStyles(textColor, shadowColor, bgColour) {
   // Add Neon theme styles
   bannerStyle = document.querySelector(".banner");
   bannerStyle.style.color = textColor;
+
+  informationStyle = document.querySelector(".infoLink");
+  informationStyle.style.color = textColor;
 
   inputStyle = document.getElementById("user-input");
   inputStyle.style.color = textColor;
