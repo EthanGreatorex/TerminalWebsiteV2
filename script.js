@@ -68,6 +68,7 @@ async function outputBanner() {
 
   for (const line of bannerLines) {
     bannerElement.textContent += line + "\n";
+    scrollToBottom();
     await sleep(70);
   }
   await sleep(70);
@@ -78,7 +79,7 @@ async function showWelcomeMessage() {
   const welcomeMessage =
     'Welcome to the terminal website. Type "help" to see a list of avaliable commands.';
 
-  const copyrightMessage = "(c) Ethan Greatorex. Version 0.1";
+  const copyrightMessage = "(c) Ethan Greatorex. Version 2.4";
 
   copyrightDiv.textContent = copyrightMessage;
   await sleep(70);
@@ -117,6 +118,7 @@ async function handleCommand(command) {
       const lineDiv = document.createElement("div");
       lineDiv.textContent = line;
       outputContainer.appendChild(lineDiv);
+      scrollToBottom();
       await sleep(70); // Adjust the delay as needed
     }
   } else {
@@ -124,11 +126,16 @@ async function handleCommand(command) {
     output.textContent = `${await processCommand(command)}`;
     if (output.textContent !== "") {
       outputContainer.appendChild(output);
+      scrollToBottom();
     }
   }
+  scrollToBottom();
 }
 
-
+function scrollToBottom() {
+  console.log("in function")
+  window.scrollTo(0,document.body.scrollHeight);
+}
 // Check for a stored theme on page load
 document.addEventListener("DOMContentLoaded", function () {
   const storedTheme = localStorage.getItem("theme");
@@ -169,6 +176,7 @@ async function processCommand(command) {
         const linkDiv = document.createElement("div");
         linkDiv.textContent = line;
         outputContainer.appendChild(linkDiv);
+        scrollToBottom();
         await sleep(70);
       }
 
@@ -177,7 +185,7 @@ async function processCommand(command) {
     case command.toLowerCase() === "music":
       window.open("https://www.youtube.com/watch?v=gFnunMAQ6NE", "_blank");
       return "Opening suggested music";
-
+      
     case command.toLowerCase().startsWith("search "):
       const query = command.slice("search ".length).trim();
       console.log("Parsed query:", query);

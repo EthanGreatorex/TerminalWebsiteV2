@@ -13,6 +13,27 @@ div{
 }
 
 
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #00000000;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #44444400;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+
 .banner{
   color: rgb(76, 121, 76);
   /* ADD CODE TO KEEP IN SPACES */
