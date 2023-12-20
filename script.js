@@ -202,6 +202,7 @@ async function processCommand(command) {
         const themeMessageDiv = document.createElement("div");
         themeMessageDiv.textContent = line;
         outputContainer.appendChild(themeMessageDiv);
+        scrollToBottom();
         await sleep(70);
       }
 
