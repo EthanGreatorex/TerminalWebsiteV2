@@ -43,11 +43,33 @@ div{
   user-select: none;
 }
 
-.information{
-  position: absolute;
+.information {
+  display: flex;
+  position: fixed;
   top: 95%;
-  left: 90%;
-  transform: translateX(-50%);
+  left: 87%;
+  z-index: 999; 
+}
+
+.information a{
+  margin-left: 30px;
+}
+
+
+.emailButton{
+  background-color: transparent;
+  border: none;
+  font-size: 17px;
+  font-family: "Roboto Mono", "Roboto Mono", "Vazirmatn", monospace;;
+  cursor: pointer;
+}
+
+
+.textToCopy {
+  visibility: hidden; /* Hide the element */
+  position: absolute; /* Position the element absolutely */
+  left: -9999px; /* Move the element off-screen horizontally */
+  top: -9999px; /* Move the element off-screen vertically */
 }
 
 #output-container{

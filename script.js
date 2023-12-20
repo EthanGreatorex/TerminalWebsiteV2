@@ -29,30 +29,30 @@ const helpMessge = ` projects                                links to other proj
  `;
 
  const linksMessage = `
-      password lock                                        https://github.com/EggGreatorex/passwordLock
-      message encrypter                                    https://github.com/EggGreatorex/MessageEncypter
-      notes  #work in progress                             https://github.com/EggGreatorex/Notes
+ password lock                                        https://github.com/EggGreatorex/passwordLock
+ message encrypter                                    https://github.com/EggGreatorex/MessageEncypter
+ notes  #work in progress                             https://github.com/EggGreatorex/Notes
       `;
 
 const themesMessage = `
 
-      nature
+ nature
 
-      midnight
+ midnight
 
-      christmas
+ christmas
 
-      neon
+ neon
 
-      monochrome
+ monochrome
 
-      aurora
+ aurora
 
-      firefly (default)
+ firefly (default)
 
-      copper
+ copper
 
-      dragon
+ dragon
       `;
 
 
@@ -94,11 +94,18 @@ const outputContainer = document.getElementById("output-container");
 const welcomeDiv = document.getElementById("welcome");
 const copyrightDiv = document.getElementById("copyright");
 const bannerElement = document.querySelector(".banner");
+let previousCommand = '';
 
 inputElement.addEventListener("keydown", async function (event) {
   if (event.key === "Enter") {
+    previousCommand = inputElement.value;
     await handleCommand(inputElement.value);
     inputElement.value = "";
+  } else if (event.key === "ArrowUp"){
+    if(previousCommand !== ""){
+      inputElement.value = previousCommand;
+    }
+
   }
 });
 
@@ -133,7 +140,6 @@ async function handleCommand(command) {
 }
 
 function scrollToBottom() {
-  console.log("in function")
   window.scrollTo(0,document.body.scrollHeight);
 }
 // Check for a stored theme on page load
@@ -146,11 +152,9 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
 async function processCommand(command) {
-  console.log("Processing command:", command);
   const bodyElement = document.body;
   switch (true) {
     case command.toLowerCase() === "clear":
-      console.log("Clearing terminal...");
       for (let i = outputContainer.children.length - 1; i >= 0; i--) {
         const childElement = outputContainer.children[i];
         outputContainer.removeChild(childElement);
@@ -162,7 +166,6 @@ async function processCommand(command) {
       welcomeDiv.innerHTML = "";
       return "";
     case command.toLowerCase() === "banner":
-      console.log("Displaying banner...");
       outputContainer.innerHTML = "";
       copyrightDiv.innerHTML = "";
       welcomeDiv.innerHTML = "";
@@ -188,7 +191,6 @@ async function processCommand(command) {
       
     case command.toLowerCase().startsWith("search "):
       const query = command.slice("search ".length).trim();
-      console.log("Parsed query:", query);
       if (query) {
         openSearch(query);
         return `Searching for ${query}...`;
@@ -343,4 +345,33 @@ function applyThemeStyles(textColor, shadowColor, bgColour) {
 function openSearch(query){
   const searchURL = `https://www.google.com/search?q=${encodeURIComponent(query)}`
   window.open(searchURL, "_blank");
+}
+
+
+function copyTextToClipboard(text) {
+  // Create a temporary input element
+  const tempInput = document.createElement("input");
+  tempInput.value = text;
+
+  // Append the input element to the document
+  document.body.appendChild(tempInput);
+
+  // Select the text inside the input element
+  tempInput.select();
+
+  // Copy the selected text to the clipboard
+  document.execCommand("copy");
+
+  // Remove the temporary input element from the document
+  document.body.removeChild(tempInput);
+}
+
+// Example usage
+ async function copyText() {
+  const email = "ExampleEmail@gmail.com";
+  copyTextToClipboard(email);
+  emailButtonText = document.querySelector(".emailButton");
+  emailButtonText.textContent = 'Copied!';
+  await sleep(1000);
+  emailButtonText.textContent = '@Email';
 }
