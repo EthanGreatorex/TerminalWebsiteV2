@@ -13,7 +13,9 @@ const banner = `----------------------------------------------------------------
 --------------------------------------------------------------------------------------------------------------------
                                            `;
 
-const helpMessge = ` projects                                links to other projects
+const helpMessge = ` |Command|                                   |Description|
+-------------------------------------------------------------------------------
+ projects                                links to other projects
 
  themes                                  view list of themes
 
@@ -29,9 +31,10 @@ const helpMessge = ` projects                                links to other proj
  `;
 
  const linksMessage = `
- password lock                                        https://github.com/EggGreatorex/passwordLock
- message encrypter                                    https://github.com/EggGreatorex/MessageEncypter
- notes  #work in progress                             https://github.com/EggGreatorex/Notes
+ // View projects by visiting GitHub page <Link bottom right> 
+ password lock                                        
+ message encrypter                                    
+ notes  #work in progress                             
       `;
 
 const themesMessage = `
@@ -53,6 +56,8 @@ const themesMessage = `
  copper
 
  dragon
+
+ mossy
       `;
 
 
@@ -255,6 +260,11 @@ async function processCommand(command) {
       saveTheme("dragon");
       return "Theme set to dragon";
 
+    case command.toLowerCase() === "theme set mossy":
+      applyThemeStyles("#89c559", "#436029", "#0c100e");
+      saveTheme("mossy");
+      return "Theme set to mossy";
+
     default:
       return 'Command not found. Type "help" for assistance.';
 
@@ -305,6 +315,10 @@ function applyStoredTheme(theme) {
     
     case "dragon":
       applyThemeStyles("#e2a528", "#c62d28", "#1a0b0c");
+      break;
+
+    case "mossy":
+      applyThemeStyles("#89c559", "#436029", "#0c100e");
       break;
 
     default:
