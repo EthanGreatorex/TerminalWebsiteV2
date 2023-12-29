@@ -34,7 +34,8 @@ const helpMessge = ` |Command|                                   |Description|
  // View projects by visiting GitHub page <Link bottom right> 
  password lock                                        
  message encrypter                                    
- notes  #work in progress                             
+ notes  #work in progress
+ trivia game                           
       `;
 
 const themesMessage = `
