@@ -3,11 +3,11 @@
 const banner = `--------------------------------------------------------------------------------------------------------------------
 --------------------------------------------------------------------------------------------------------------------
 
- |__   __|                (_)           | |
-    | | ___ _ __ _ __ ___  _ _ __   __ _| |
-    | |/ _ \ '__| '_   _ \| | '_ \ / _  | |
-    | |  __/ |  | | | | | | | | | | (_| | |
-    |_|\___|_|  |_| |_| |_|_|_| |_|\__,_|_|
+  _____ _   _                 
+  | ____| |_| |__   __ _ _ __  
+  |  _| | __|  _ \ / _  | '_ \ 
+  | |___| |_| | | | (_| | | | |
+  |_____|\__|_| |_|\__,_|_| |_|
 
 --------------------------------------------------------------------------------------------------------------------
 --------------------------------------------------------------------------------------------------------------------
@@ -31,11 +31,11 @@ const helpMessge = ` |Command|                                   |Description|
  `;
 
  const linksMessage = `
- // View projects by visiting GitHub page <Link bottom right> 
- password lock                                        
- message encrypter                                    
- notes  #work in progress
- trivia game                           
+ // View projects by visiting my Github page :) The link is bottom right! 
+ EasyArticleFlaskAPP                                        
+ PythonChatApp                                    
+ QuizAPIWebsite
+ ...                        
       `;
 
 const themesMessage = `
@@ -62,6 +62,15 @@ const themesMessage = `
       `;
 
 
+// Terminal divs
+const inputElement = document.getElementById("user-input");
+const outputContainer = document.getElementById("output-container");
+const welcomeDiv = document.getElementById("welcome");
+const copyrightDiv = document.getElementById("copyright");
+const bannerElement = document.querySelector(".banner");
+let current_previous_index = 0
+let previousCommand = [];
+
 //--------------------------------------------------------------------------------------
 
 function sleep(ms) {
@@ -83,9 +92,9 @@ async function outputBanner() {
 
 async function showWelcomeMessage() {
   const welcomeMessage =
-    'Welcome to the terminal website. Type "help" to see a list of avaliable commands.';
+    'Welcome to my terminal style website! Type "help" to see a list of avaliable commands.';
 
-  const copyrightMessage = "(c) Ethan Greatorex. Version 2.4";
+  const copyrightMessage = "Ethan Greatorex. Version 2.4";
 
   copyrightDiv.textContent = copyrightMessage;
   await sleep(70);
@@ -94,29 +103,33 @@ async function showWelcomeMessage() {
 
 outputBanner();
 
-// Terminal divs
-const inputElement = document.getElementById("user-input");
-const outputContainer = document.getElementById("output-container");
-const welcomeDiv = document.getElementById("welcome");
-const copyrightDiv = document.getElementById("copyright");
-const bannerElement = document.querySelector(".banner");
-let previousCommand = '';
 
+// add an event listner to look for an up arrow or enter key
 inputElement.addEventListener("keydown", async function (event) {
   if (event.key === "Enter") {
-    previousCommand = inputElement.value;
+    previousCommand.push(inputElement.value);
     await handleCommand(inputElement.value);
     inputElement.value = "";
   } else if (event.key === "ArrowUp"){
+    previousCommand.push(inputElement.value);
     if(previousCommand !== ""){
-      inputElement.value = previousCommand;
+      inputElement.value = previousCommand[current_previous_index];
+      current_previous_index += 1
+    }
+  } else if (event.key === "ArrowDown"){
+    previousCommand.push(inputElement.value);
+    if(previousCommand !== ""){
+      current_previous_index -= 1
+      inputElement.value = previousCommand[current_previous_index];
     }
 
   }
 });
 
 async function handleCommand(command) {
+  // create a div element to display the command the user entered after the enter key is pressed
   let outputCommand = document.createElement("div");
+  // create a div element to store our output from running the user command
   let output = document.createElement("div");
   outputCommand.textContent = `--${command}`;
   outputContainer.appendChild(outputCommand);
@@ -136,7 +149,9 @@ async function handleCommand(command) {
     }
   } else {
     // Process the command and display its output
+    // store the return value from processCommand inside the output div
     output.textContent = `${await processCommand(command)}`;
+    // only show an output to the user if the return value is not null
     if (output.textContent !== "") {
       outputContainer.appendChild(output);
       scrollToBottom();
@@ -158,9 +173,10 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
 async function processCommand(command) {
-  const bodyElement = document.body;
+
   switch (true) {
     case command.toLowerCase() === "clear":
+      // start at the most recent line and delet each line progessing upwards
       for (let i = outputContainer.children.length - 1; i >= 0; i--) {
         const childElement = outputContainer.children[i];
         outputContainer.removeChild(childElement);
@@ -381,9 +397,9 @@ function copyTextToClipboard(text) {
   document.body.removeChild(tempInput);
 }
 
-// Example usage
+// Copy email
  async function copyText() {
-  const email = "ExampleEmail@gmail.com";
+  const email = "EggGreatorex@gmail.com";
   copyTextToClipboard(email);
   emailButtonText = document.querySelector(".emailButton");
   emailButtonText.textContent = 'Copied!';
