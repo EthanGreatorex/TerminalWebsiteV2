@@ -84,9 +84,9 @@ async function outputBanner() {
   for (const line of bannerLines) {
     bannerElement.textContent += line + "\n";
     scrollToBottom();
-    await sleep(70);
+    await sleep(40);
   }
-  await sleep(70);
+  await sleep(40);
   showWelcomeMessage();
 }
 
@@ -97,7 +97,7 @@ async function showWelcomeMessage() {
   const copyrightMessage = "Ethan Greatorex. Version 2.5";
 
   copyrightDiv.textContent = copyrightMessage;
-  await sleep(70);
+  await sleep(40);
   welcomeDiv.textContent = welcomeMessage;
 }
 
@@ -150,7 +150,7 @@ async function handleCommand(command) {
       lineDiv.textContent = line;
       outputContainer.appendChild(lineDiv);
       scrollToBottom();
-      await sleep(70); // Adjust the delay as needed
+      await sleep(40); // Adjust the delay as needed
     }
   } else {
     // Process the command and display its output
@@ -185,7 +185,7 @@ async function processCommand(command) {
       for (let i = outputContainer.children.length - 1; i >= 0; i--) {
         const childElement = outputContainer.children[i];
         outputContainer.removeChild(childElement);
-        await sleep(70);
+        await sleep(40);
       }
       bannerElement.innerHTML = "";
       outputContainer.innerHTML = "";
@@ -215,7 +215,7 @@ async function processCommand(command) {
         applyStoredTheme(storedTheme)
         outputContainer.appendChild(linkDiv);
         scrollToBottom();
-        await sleep(70);
+        await sleep(40);
       }
       const projectInfo = document.createElement("div")
       projectInfo.textContent = "You can view a lot more of my projects on github :)"
@@ -244,7 +244,7 @@ async function processCommand(command) {
         themeMessageDiv.textContent = line;
         outputContainer.appendChild(themeMessageDiv);
         scrollToBottom();
-        await sleep(70);
+        await sleep(40);
       }
 
       return "";
