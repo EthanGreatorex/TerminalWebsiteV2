@@ -12,7 +12,9 @@ div{
   margin-bottom: 15px;
 }
 
-
+.projectLinks{
+  text-decoration: none;
+}
 
 ::-webkit-scrollbar {
   width: 10px;
@@ -98,4 +100,32 @@ div{
   color: #ffb354;
   text-shadow: 0 0 10px #ffa03b, 0 0 20px #ffa03b, 0 0 30px #ffa03b;
   user-select: none;
+}
+
+/* Add proper sizing for devices */
+/* Ensure proper avaliability for devices */
+
+@media (max-width: 1000px) {
+  .information{
+    top: 95%;
+    left: 77%;
+  }
+}
+@media (max-width: 900px) {
+  .information{
+    top: 95%;
+    left: 77%;
+  }
+}
+@media (max-width: 768px) {
+  .information{
+    top: 95%;
+    left: 70%;
+  }
+}
+@media (max-width: 480px) {
+  .information{
+    top: 95%;
+    left: 55%;
+  }
 }

@@ -15,6 +15,7 @@ const banner = `----------------------------------------------------------------
 
 const helpMessge = ` |Command|                                   |Description|
 -------------------------------------------------------------------------------
+
  projects                                links to other projects
 
  themes                                  view list of themes
@@ -31,34 +32,33 @@ const helpMessge = ` |Command|                                   |Description|
  `;
 
  const linksMessage = `
- // View projects by visiting my Github page :) The link is bottom right! 
- EasyArticleFlaskAPP                                        
- PythonChatApp                                    
- QuizAPIWebsite
- ...                        
+ https://github.com/EthanGreatorex/EasyArticleFlaskAPP                                 
+ https://github.com/EthanGreatorex/KeyLogger                                   
+ https://github.com/EthanGreatorex/QuizAPIWebsite                      
       `;
 
-const themesMessage = `
+const themesMessage = ` |Theme|                                   |Rating / 10|
+-------------------------------------------------------------------------------
 
- nature
+ nature                                          6
 
- midnight
+ midnight                                        4
 
- christmas
+ christmas                                       7
 
- neon
+ neon                                            1 
 
- monochrome
+ monochrome                                      8
 
- aurora
+ aurora                                          10
 
- firefly (default)
+ firefly (default)                               10
 
- copper
+ copper                                          1
 
- dragon
+ dragon                                          10
 
- mossy
+ mossy                                           10
       `;
 
 
@@ -92,9 +92,9 @@ async function outputBanner() {
 
 async function showWelcomeMessage() {
   const welcomeMessage =
-    'Welcome to my terminal style website! Type "help" to see a list of avaliable commands.';
+    'Welcome to my terminal style website! Type "help" to see a list of avaliable commands.\nI highly recommend using this website on a pc, not a phone :)';
 
-  const copyrightMessage = "Ethan Greatorex. Version 2.4";
+  const copyrightMessage = "Ethan Greatorex. Version 2.5";
 
   copyrightDiv.textContent = copyrightMessage;
   await sleep(70);
@@ -196,22 +196,34 @@ async function processCommand(command) {
 
     case command.toLowerCase() === "projects":
       const linksMessageLines = linksMessage.split("\n");
+      const storedTheme = localStorage.getItem("theme");
 
       for (const line of linksMessageLines) {
         const linkDiv = document.createElement("div");
-        linkDiv.textContent = line;
+        const link = document.createElement("a")
+        link.href = line
+        link.textContent = line
+        link.target = "blank"
+        link.classList.add("projectLinks")
+        link.classList.add("glowText")
+        linkDiv.appendChild(link)
+        applyStoredTheme(storedTheme)
         outputContainer.appendChild(linkDiv);
         scrollToBottom();
         await sleep(70);
       }
+      const projectInfo = document.createElement("div")
+      projectInfo.textContent = "You can view a lot more of my projects on github :)"
+      outputContainer.appendChild(projectInfo)
+
 
       return "";
 
     case command.toLowerCase() === "music":
-      window.open("https://www.youtube.com/watch?v=gFnunMAQ6NE", "_blank");
+      window.open("https://www.youtube.com/watch?v=dQw4w9WgXcQ", "_blank");
       return "Opening suggested music";
       
-    case command.toLowerCase().startsWith("search "):
+    case command.toLowerCase().startsWith("search"):
       const query = command.slice("search ".length).trim();
       if (query) {
         openSearch(query);
