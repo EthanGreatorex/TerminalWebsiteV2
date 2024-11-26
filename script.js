@@ -52,13 +52,13 @@ const themesMessage = ` |Theme|                                   |Rating / 10|
 
  aurora                                          10
 
- firefly (default)                               10
+ firefly                                         5
 
  copper                                          1
 
  dragon                                          10
 
- mossy                                           10
+ mossy (default)                                 10
       `;
 
 
@@ -101,6 +101,11 @@ async function showWelcomeMessage() {
   welcomeDiv.textContent = welcomeMessage;
 }
 
+// Code to run at the start. Apply the default mossy theme
+applyThemeStyles("#89c559", "#436029", "#0c100e");
+      saveTheme("mossy");
+
+// Show the banner
 outputBanner();
 
 
@@ -359,7 +364,7 @@ function applyStoredTheme(theme) {
 
 
 function applyThemeStyles(textColor, shadowColor, bgColour) {
-  // Add Neon theme styles
+  // Add  theme styles
   bannerStyle = document.querySelector(".banner");
   bannerStyle.style.color = textColor;
 
