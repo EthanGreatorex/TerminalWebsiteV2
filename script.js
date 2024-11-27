@@ -58,7 +58,9 @@ const themesMessage = ` |Theme|                                   |Rating / 10|
 
  dragon                                          10
 
- mossy (default)                                 10
+ mossy                                           10
+
+ pumpkin (default                                10
       `;
 
 
@@ -92,18 +94,37 @@ async function outputBanner() {
 
 async function showWelcomeMessage() {
   const welcomeMessage =
-    'Welcome to my terminal style website! Type "help" to see a list of avaliable commands.\nI highly recommend using this website on a pc, not a phone :)';
+    'Welcome to my terminal style website! ';
+  const tipMessageL1 = 'Type "help" to see a list of avaliable commands.'
 
   const copyrightMessage = "Ethan Greatorex. Version 2.5";
 
   copyrightDiv.textContent = copyrightMessage;
   await sleep(40);
   welcomeDiv.textContent = welcomeMessage;
+  await sleep(40)
+  tipDiv = document.createElement("div")
+  tipDiv.textContent = tipMessageL1
+  welcomeDiv.appendChild(tipDiv)
 }
 
-// Code to run at the start. Apply the default mossy theme
-applyThemeStyles("#89c559", "#436029", "#0c100e");
-      saveTheme("mossy");
+// Code to run at the start.
+
+
+
+// Check for a stored theme on page load
+document.addEventListener("DOMContentLoaded", function () {
+  const storedTheme = localStorage.getItem("theme");
+  if (storedTheme) {
+    applyStoredTheme(storedTheme);
+  } else{
+    //Apply the default pumpkin theme
+    applyThemeStyles("#e6b450","#e17f3a","#0a0e14")
+    saveTheme("mossy");
+  }
+});
+
+
 
 // Show the banner
 outputBanner();
@@ -168,13 +189,6 @@ async function handleCommand(command) {
 function scrollToBottom() {
   window.scrollTo(0,document.body.scrollHeight);
 }
-// Check for a stored theme on page load
-document.addEventListener("DOMContentLoaded", function () {
-  const storedTheme = localStorage.getItem("theme");
-  if (storedTheme) {
-    applyStoredTheme(storedTheme);
-  }
-});
 
 
 async function processCommand(command) {
@@ -299,6 +313,11 @@ async function processCommand(command) {
       saveTheme("mossy");
       return "Theme set to mossy";
 
+    case command.toLowerCase() === "theme set pumpkin":
+      applyThemeStyles("#e6b450","#e17f3a","#0a0e14")
+      saveTheme("pumpkin");
+      return "Theme set to pumpkin";
+
     default:
       return 'Command not found. Type "help" for assistance.';
 
@@ -353,7 +372,10 @@ function applyStoredTheme(theme) {
 
     case "mossy":
       applyThemeStyles("#89c559", "#436029", "#0c100e");
-      break;
+      break;C
+    
+    case "pumpkin":
+      applyThemeStyles("#e6b450","#e17f3a","#0a0e14")
 
     default:
       break;
