@@ -418,6 +418,7 @@ function openSearch(query){
 }
 
 
+
 function copyTextToClipboard(text) {
   // Create a temporary input element
   const tempInput = document.createElement("input");
